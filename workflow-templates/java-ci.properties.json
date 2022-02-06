@@ -1,0 +1,7 @@
+{
+    "name": "Java CI",
+    "description": "Tests and builds a java app, and uploads the build artifact.",
+    "categories": [
+        "Java"
+    ]
+}
