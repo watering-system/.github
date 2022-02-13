@@ -1,6 +1,6 @@
 {
     "name": "Java CI",
-    "description": "Tests and builds a java app, and uploads the build artifact.",
+    "description": "Builds a java app, containerizes it and uploads the container to the registry.",
     "categories": [
         "Java"
     ]

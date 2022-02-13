@@ -1,0 +1,28 @@
+name: Continuous Delivery
+
+on: push
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    
+    - name: Cluster Configuration
+      run: |
+        echo ${{ secrets.KUBE_CONFIG }} > ~/.kube/config
+
+    - name: Apply Manifests to Cluster
+      run: |
+        kubectl --namespace $NAMESPACE apply -f k8s/
+
+
+
+
+      
+
+
+
