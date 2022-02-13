@@ -2,6 +2,7 @@
     "name": "Continuous Delivery",
     "description": "Sets ups the cluster configuration and deploys the manifest files of the repo to the k8s cluster.",
     "categories": [
-        "Java"
+        "Java",
+        "Dockerfile"
     ]
 }

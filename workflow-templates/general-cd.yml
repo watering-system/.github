@@ -2,6 +2,10 @@ name: Continuous Delivery
 
 on: push
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   deploy:
     name: Deploy
@@ -18,11 +22,3 @@ jobs:
     - name: Apply Manifests to Cluster
       run: |
         kubectl --namespace $NAMESPACE apply -f k8s/
-
-
-
-
-      
-
-
-
