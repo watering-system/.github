@@ -1,15 +1,20 @@
 name: Continuous Delivery
 
-on: push
+on: 
+  workflow_run:
+    workflows: ["Java CI"]
+    types: 
+      - completed
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}:${{ github.sha }}
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
     - name: Checkout Repo
@@ -17,7 +22,11 @@ jobs:
     
     - name: Cluster Configuration
       run: |
-        echo ${{ secrets.KUBE_CONFIG }} > ~/.kube/config
+        curl -H "Authorization: bearer ${{ secrets.API_TOKEN }}" https://api.civo.com/v2/kubernetes/clusters\?region\=FRA1 | jq -r '.items[0].kubeconfig' > ~/.kube/config
+
+    - name: Check Cluster Connection
+      run: |
+        kubectl cluster-info > /dev/null && echo "Cluster is reachable"
 
     - name: Apply Manifests to Cluster
       run: |
